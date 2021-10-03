@@ -1,0 +1,42 @@
+<p-toolbar class="m-1">
+  <div class="ui-toolbar-group-left">
+    <button
+      class="btn btn-primary"
+      type="button"
+      pTooltip="Создать новую запись"
+      [disabled]="disableCreateButton$ | async"
+      (click)="create()"
+    >
+      <i class="fa fa-plus"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-warning"
+      pTooltip="Редактировать выбранную запись"
+      [disabled]="disableEditDeleteButtons$ | async"
+      (click)="edit()"
+    >
+      <i class="fa fa-edit"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      pTooltip="Удалить выбранную запись"
+      [disabled]="disableEditDeleteButtons$ | async"
+      (click)="delete()"
+    >
+      <i class="fa fa-trash"></i>
+    </button>
+  </div>
+  <div class="ui-toolbar-group-right">
+    <button
+      class="btn btn-primary"
+      type="button"
+      pTooltip="Открыть меню печати"
+      (click)="openPrint()"
+      disabled="true"
+    >
+      <i class="fa fa-print"></i>
+    </button>
+  </div>
+</p-toolbar>

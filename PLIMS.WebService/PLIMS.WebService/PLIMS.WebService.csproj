@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <IsWindows Condition=" '$(OS)' == 'Windows_NT' ">true</IsWindows>
+        <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+        <IsLinux Condition=" '$(OS)' == 'Unix' ">true</IsLinux>
+        <GenerateCode>True</GenerateCode>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(IsWindows)'=='true'">
+        <DefineConstants>Windows</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(IsOSX)'=='true'">
+        <DefineConstants>OSX</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(IsLinux)'=='true'">
+        <DefineConstants>Linux</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="wwwroot\*" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PLIMS.Common\PLIMS.Common.csproj" />
+      <ProjectReference Include="..\PLIMS.DI\PLIMS.DI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.5" />
+      <PackageReference Condition=" '$(OS)' == 'Windows_NT' " Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.5" />
+      <PackageReference Include="NSwag.AspNetCore" Version="13.10.2" />
+      <PackageReference Include="NSwag.MSBuild" Version="13.10.2">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Serilog.AspNetCore" Version="3.4.0-dev-00173" />
+      <PackageReference Include="Serilog.Sinks.File" Version="5.0.0-dev-00880" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Update="nswag.json">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
+    <Target Name="NSwag" BeforeTargets="AfterBuild" Condition=" '$(Configuration)' == 'Debug' ">
+<!--        <Exec Command="$(NSwagExe_Core31) run nswag.json" />-->
+        <Exec Command="$(NSwagExe_Core31) run nswag.json /variables:OutDir=$(OutDir),AssemblyName=$(AssemblyName).dll" />
+    </Target>
+</Project>

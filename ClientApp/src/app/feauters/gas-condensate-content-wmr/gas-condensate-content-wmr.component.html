@@ -1,0 +1,20 @@
+<div class="row h-100">
+  <nav class="col-md-auto px-0" id="left">
+    <app-gas-condensate-content-wmr-tree></app-gas-condensate-content-wmr-tree> 
+  </nav>
+
+  <main class="col" id="content" >
+    <h4 style="text-align: center;">Содержание газового конденсата в ВМР</h4>
+
+    <p-tabView orientation=bottom (onChange)="changeSelectedTab($event)">
+      <p-tabPanel header="Таблица">
+        <app-gas-condensate-content-wmr-filter></app-gas-condensate-content-wmr-filter>
+        <app-gas-condensate-content-wmr-table></app-gas-condensate-content-wmr-table>
+      </p-tabPanel>
+      <p-tabPanel header="График">
+        <app-chart></app-chart>
+      </p-tabPanel>
+  </p-tabView>
+  </main>
+
+</div>

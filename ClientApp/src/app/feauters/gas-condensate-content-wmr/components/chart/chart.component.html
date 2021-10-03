@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-3">
+    <p-dropdown
+    [options]="chartTypes"
+    [(ngModel)]="selectedType"
+    placeholder="Выберите тип графика"
+    optionLabel="name"></p-dropdown>
+  </div>
+</div>
+
+<div [style.height]="chartHeight">
+  <canvas id="gasCondensateContentWmrCanvasId" height="100"></canvas>
+</div>
+

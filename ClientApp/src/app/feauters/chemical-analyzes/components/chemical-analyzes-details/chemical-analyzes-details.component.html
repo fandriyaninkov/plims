@@ -1,0 +1,340 @@
+<div class="modal-body">
+  <form [formGroup]="analysisForm" action="">
+    <div class="form-group row">
+      <label for="place" class="col-sm-4 col-form-label"
+        >Место отбора проб</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          readonly
+          class="form-control-plaintext"
+          value="Поле 1"
+          name="place"
+          [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="place"
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="point" class="col-sm-4 col-form-label">Точка отбора</label>
+      <div class="col-sm-8">
+        <p-dropdown
+          [options]="samplingPoints"
+          formControlName="selectedPoint"
+          optionLabel="name"
+          name="samplingPoints"
+          filter="true"
+          placeholder="Выберите точку отбора"
+          [style]="{ width: '100%' }"
+          [ngClass]="{ 'is-invalid': submitted && f.selectedPoint.errors }"
+        >
+        </p-dropdown>
+        <div *ngIf="submitted && f.selectedPoint.errors" class="invalid-feedback">
+          Выберите точку отбора
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="sampleCode" class="col-sm-4 col-form-label"
+        >Регистрационный номер</label
+      >
+      <div class="col-sm-8">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="regCode"
+          name="sampleCode"
+          [ngClass]="{ 'is-invalid': submitted && f.regCode.errors }"
+        />
+        <div *ngIf="submitted && f.regCode.errors" class="invalid-feedback">
+          Введите регистрационный номер
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="samplingDate" class="col-sm-4 col-form-label"
+        >Дата отбора пробы</label
+      >
+      <div class="col-sm-8">
+        <p-calendar
+          formControlName="samplingDate"
+          dateFormat="dd-mm-yy"
+          [style]="{ width: '100%' }"
+          [locale]="ruLocale"
+          [inputStyle]="{ width: '100%' }"
+          name="samplingDate"
+        ></p-calendar>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="deliveringDate" class="col-sm-4 col-form-label"
+        >Дата доставки пробы</label
+      >
+      <div class="col-sm-8">
+        <p-calendar
+          formControlName="deliveringDate"
+          dateFormat="dd-mm-yy"
+          [style]="{ width: '100%' }"
+          [locale]="ruLocale"
+          [inputStyle]="{ width: '100%' }"
+          name="deliveringDate"
+        ></p-calendar>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="analysisDate" class="col-sm-4 col-form-label"
+        >Дата анализа</label
+      >
+      <div class="col-sm-8">
+        <p-calendar
+          formControlName="analysisDate"
+          dateFormat="dd-mm-yy"
+          [style]="{ width: '100%' }"
+          [locale]="ruLocale"
+          [inputStyle]="{ width: '100%' }"
+          name="analysisDate"
+        ></p-calendar>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label"
+        >Лаборант</label
+      >
+      <div class="col-sm-8">
+        <p-dropdown
+          [options]="laboratoryAssistants"
+          formControlName="laboratoryAssistant"
+          optionLabel="fullName"
+          filter="true"
+          placeholder="Выберите лаборанта"
+          name="laboratoryAssistants"
+          [style]="{ width: '100%' }"
+          [ngClass]="{ 'is-invalid': submitted && f.laboratoryAssistant.errors }"
+        >
+        </p-dropdown>
+        <div *ngIf="submitted && f.laboratoryAssistant.errors" class="invalid-feedback">
+          Выберите лаборанта
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="contentWMR" class="col-sm-4 col-form-label"
+        >Содержание ВМР</label
+      >
+      <div class="col-sm-8">
+        <div class="input-group mb-3">
+          <input
+            type="number"
+            name="contentWMR"
+            class="form-control"
+            formControlName="contentWMR"
+            min="0"
+            max="100"
+            [ngClass]="{ 'is-invalid': submitted && f.contentWMR.errors }"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+          <div *ngIf="submitted && f.contentWMR.errors" class="invalid-feedback">
+            <div *ngIf="f.contentWMR.errors.required">Введите значение</div>
+            <div *ngIf="f.contentWMR.errors.min">Значение должно быть больше 0</div>
+            <div *ngIf="f.contentWMR.errors.max">Значение должно быть меньше 100</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="condensateContent" class="col-sm-4 col-form-label"
+        >Содержание конденсата</label
+      >
+      <div class="col-sm-8">
+        <div class="input-group mb-3">
+          <input
+            type="number"
+            name="condensateContent"
+            formControlName="condensateContent"
+            class="form-control"
+            min="0"
+            max="100"
+            [ngClass]="{ 'is-invalid': submitted && f.condensateContent.errors }"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">%</span>
+          </div>
+          <div *ngIf="submitted && f.condensateContent.errors" class="invalid-feedback">
+            <div *ngIf="f.condensateContent.errors.required">Введите значение</div>
+            <div *ngIf="f.condensateContent.errors.min">Значение должно быть больше 0</div>
+            <div *ngIf="f.condensateContent.errors.max">Значение должно быть меньше 100</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row border d-flex">
+      <label
+        for="massFractionOfMethanol"
+        class="col-sm-4 col-form-label justify-content-center align-self-center"
+        >Массовая доля метанола в ВМР</label
+      >
+      <div class="col-sm-8 input-group">
+        <div class="multiple-inputs">
+          <div class="form-check mb-1">
+            <input
+              type="checkbox"
+              name="massFractionOfMethanolNotAvialable"
+              formControlName="massFractionOfMethanolNotAvialable"
+              class="form-check-input"
+            />
+            <label
+              for="massFractionOfMethanolNotAvialable"
+              class="form-check-label"
+              >Измерение данного показателя не предусмотрено</label
+            >
+          </div>
+        </div>
+        <div class="input-group multiple-inputs mb-1">
+          <input
+            type="number"
+            name="massFractionOfMethanol"
+            formControlName="massFractionOfMethanol"
+            class="form-control"
+            min="0"
+            max="100"
+            step="0.01"
+            [ngClass]="{ 'is-invalid': submitted && f.massFractionOfMethanol.errors }"
+            />
+          
+          <div class="input-group-prepend">
+            <span class="input-group-text">&plusmn;</span>
+          </div>
+
+          <input
+            type="number"
+            name="massFractionOfMethanolError"
+            formControlName="massFractionOfMethanolError"
+            class="form-control"
+            min="0"
+            max="10"
+            step="0.01"
+            [ngClass]="{ 'is-invalid': submitted && f.massFractionOfMethanolError.errors }"
+          />
+
+          <div class="input-group-prepend">
+            <span class="input-group-text">%</span>
+          </div>
+
+          <div *ngIf="submitted && f.massFractionOfMethanol.errors" class="invalid-feedback">
+            <div *ngIf="submitted && f.massFractionOfMethanol.errors.requiredIfEnabled">Введите значение</div>
+          </div>
+          <div *ngIf="submitted && f.massFractionOfMethanolError.errors" class="invalid-feedback">
+            <div *ngIf="submitted && f.massFractionOfMethanolError.errors.requiredIfEnabled">Введите значение погрешности</div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+    <div class="form-group row border d-flex">
+      <label
+        for="massFractionOfWater"
+        class="col-sm-4 col-form-label justify-content-center align-self-center"
+        >Массовая доля воды</label
+      >
+      <div class="col-sm-8">
+        <div class="row multiple-inputs">
+          <div class="form-check mb-1">
+            <input
+              type="checkbox"
+              name="massFractionOfWaterNotAvialable"
+              formControlName="massFractionOfWaterNotAvialable"
+              class="form-check-input"
+            />
+            <label
+              for="massFractionOfWaterNotAvialable"
+              class="form-chack-label"
+              >Измерение данного показателя не предусмотрено</label
+            >
+          </div>
+        </div>
+        <div class="row multiple-inputs input-group mb-1">
+          <input
+              type="number"
+              name="massFractionOfWater"
+              formControlName="massFractionOfWater"
+              class="form-control"
+              min="0"
+              max="100"
+              step="0.01"
+              [ngClass]="{ 'is-invalid': submitted && f.massFractionOfWater.errors }"
+            />
+            <div class="input-group-prepend">
+              <span class="input-group-text">&plusmn;</span>
+            </div>
+            <input
+              type="number"
+              name="massFractionOfWaterError"
+              formControlName="massFractionOfWaterError"
+              class="form-control"
+              min="0"
+              max="10"
+              step="0.01"
+              [ngClass]="{ 'is-invalid': submitted && f.massFractionOfWaterError.errors }"
+            />
+            <div class="input-group-prepend">
+              <span class="input-group-text">%</span>
+            </div>
+
+            <div *ngIf="submitted && f.massFractionOfWater.errors" class="invalid-feedback">
+              <div *ngIf="submitted && f.massFractionOfWater.errors.requiredIfEnabled">Введите значение</div>
+            </div>
+            <div *ngIf="submitted && f.massFractionOfWaterError.errors" class="invalid-feedback">
+              <div *ngIf="submitted && f.massFractionOfWaterError.errors.requiredIfEnabled">Введите значение погрешности</div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row border d-flex">
+      <label
+        for="massConcentrationofCorrosionInhibitor"
+        class="col-sm-4 col-form-label justify-content-center align-self-center"
+        >Массовая концентрация ингибитора коррозии</label
+      >
+      <div class="col-sm-8">
+        <div class="row multiple-inputs">
+          <div class="form-check mb-1">
+            <input
+              type="checkbox"
+              name="massConcentrationofCorrosionInhibitorNotAvialable"
+              formControlName="massConcentrationOfCorrosionInhibitorNotAvialable"
+              class="form-check-input"
+            />
+            <label
+              for="massConcentrationofCorrosionInhibitorNotAvialable"
+              class="form-check-label"
+              >Измерение данного показателя не предусмотрено</label
+            >
+          </div>
+        </div>
+        <div class="row multiple-inputs input-group mb-1">
+          <input
+              type="number"
+              name="massConcentrationOfCorrosionInhibitor"
+              formControlName="massConcentrationOfCorrosionInhibitor"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.massConcentrationOfCorrosionInhibitor.errors }"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text">мг/дм &#179;</span>
+            </div>
+            <div *ngIf="submitted && f.massConcentrationOfCorrosionInhibitor.errors" class="invalid-feedback">
+              <div *ngIf="submitted && f.massConcentrationOfCorrosionInhibitor.errors.requiredIfEnabled">Введите значение</div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="save()">Сохранить</button>
+  <button type="button" class="btn btn-secondary" (click)="cancel()">Отмена</button>
+</div>

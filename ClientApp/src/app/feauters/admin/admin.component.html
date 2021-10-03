@@ -1,0 +1,10 @@
+<div class="row h-100">
+  <nav class="col-md-auto px-0" id="left">
+    <p-tree [value]="menuTreeNodes$ | async" selectionMode="single" (onNodeSelect)="nodeSelect($event.node)"></p-tree>
+  </nav>
+  
+  <main class="col" id="content" >
+    <router-outlet></router-outlet>
+  </main>
+  
+</div>

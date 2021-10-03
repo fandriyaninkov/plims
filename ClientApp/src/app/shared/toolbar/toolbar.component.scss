@@ -1,0 +1,8 @@
+button {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+:host ::ng-deep .btn:disabled {
+  opacity: .2;
+}

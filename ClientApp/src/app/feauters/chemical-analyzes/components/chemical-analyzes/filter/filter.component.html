@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-4">
+    <div class="form-group">
+      <p-calendar
+        [(ngModel)]="selectedDate"
+        view="month"
+        dateFormat="mm/yy"
+        [yearNavigator]="true"
+        yearRange="2000:2030"
+        [readonlyInput]="true"
+        placeholder="Выберите месяц"
+        [locale]="ru"
+        [style]="{ width: '100%' }"
+        [inputStyle]="{ width: '100%', opacity: selectedDate ? '1' : '0.5' }"
+      ></p-calendar>
+    </div>
+  </div>
+</div>

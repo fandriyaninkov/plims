@@ -1,0 +1,8 @@
+<p-tree 
+  [value]="treeNodes$ | async"
+  selectionMode="single"
+  [(selection)]="selected"
+  (onNodeExpand)="loadNode($event)">
+
+</p-tree>
+
